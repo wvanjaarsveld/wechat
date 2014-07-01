@@ -1,5 +1,9 @@
 #wechat-pro
 
+[npm page](https://www.npmjs.org/package/wechat-pro)
+
+Install: npm install wechat-pro
+
 微信公共平台消息接口服务中间件与API SDK
 
 forked from [node-webot/wechat](https://github.com/node-webot/wechat)
@@ -33,6 +37,7 @@ var api = new OAuth('appid', 'secret', 'proxy');
 ```
 
 ======
+
 原作README在[这里](./README-origin.md)
 
 See wechat README English version [here](./README-origin.en.md)
