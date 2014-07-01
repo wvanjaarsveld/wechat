@@ -1,6 +1,7 @@
 #wechat-pro
-======
+
 微信公共平台消息接口服务中间件与API SDK
+
 forked from [node-webot/wechat](https://github.com/node-webot/wechat)
 
 wechat-pro是wechat的一个修改版，修改涉及：
