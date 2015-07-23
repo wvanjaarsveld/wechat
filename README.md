@@ -1,80 +1,57 @@
-wechat [![NPM version](https://badge.fury.io/js/wechat.png)](http://badge.fury.io/js/wechat) [![Build Status](https://travis-ci.org/node-webot/wechat.png?branch=master)](https://travis-ci.org/node-webot/wechat) [![Dependencies Status](https://david-dm.org/node-webot/wechat.png)](https://david-dm.org/node-webot/wechat) [![Coverage Status](https://coveralls.io/repos/node-webot/wechat/badge.png)](https://coveralls.io/r/node-webot/wechat)
-======
 
 Wechat is a middleware and SDK of Wechat Official Account Admin Platform (mp.weixin.qq.com).
 
-This wechat document is translated by [Guo Yu](https://github.com/turingou/), if you have some understanding problems, please feel free open an issue [here](https://github.com/turingou/wechat/issues).
-
-## Features
-
-- Auto reply (text, image, videos, music, thumbnails posts are supported)
-- CRM message (text, image, videos, music, thumbnails posts are supported)
-- Menu settings (CRD are supported)
-- QR codes (CR are supported, both temporary and permanent)
-- Group settings (CRUD are supported)
-- Followers infomation (fetching user's info or followers list)
-- Media (upload or download)
-- Reply Waiter (good for surveys)
-- Sessions 
-- OAuth API
-- Payment (deliver notify and order query)
-
-API details located [here](http://node-webot.github.io/wechat/api.html)
-
 ## Installation
 
+Until I register it properly as a module please just clone it into the node_modules folder into node-wechat.
+
+## Use with Express
+
+NOTE: Body parsing done by this library. So no body parsing must be done before the WeChat handler. This is still legacy and I might make this optional.
+
+The way I got around this was:
+
 ```
-npm install wechat
+var router = express();
+var bodyParser = require('body-parser');
+
+var js = bodyParser.json();
+var urlEnc = bodyParser.urlencoded({ extended: true });
+
+
+router.use(function(req, res, next) {
+  if (/^\/wechat/.test(req.url)) return next();
+  
+  js(req, res, function(err) {
+    if (err) next(err);
+    else urlEnc(req, res, next);
+  });
+});
 ```
 
-## Use with Connect/Express
 
 ```
-var wechat = require('wechat');
+var wechat = require('node-wechat');
 
-app.use(connect.query()); // Or app.use(express.query());
 app.use('/wechat', wechat('some token', function (req, res, next) {
   // message is located in req.weixin
   var message = req.weixin;
-  if (message.FromUserName === 'diaosi') {
+  if (message.Content === 'test') {
     // reply with text
-    res.reply('hehe');
-  } else if (message.FromUserName === 'text') {
-    // another way to reply with text
-    res.reply({
-      content: 'text object',
-      type: 'text'
-    });
-  } else if (message.FromUserName === 'hehe') {
-    // reply with music
-    res.reply({
-      type: "music",
-      content: {
-        title: "Just some music",
-        description: "I have nothing to lose",
-        musicUrl: "http://mp3.com/xx.mp3",
-        hqMusicUrl: "http://mp3.com/xx.mp3"
-      }
-    });
+    res.reply('This is a node-wechat test');
   } else {
-    // reply with thumbnails posts
-    res.reply([
-      {
-        title: 'Come to fetch me',
-        description: 'or you want to play in another way ?',
-        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
-        url: 'http://nodeapi.cloudfoundry.com/'
-      }
-    ]);
+    res.reply('You sent: ' + message.Content);
   }
 }));
 ```
 
-*Tips*: you'll have to apply `token` at [Wechat platform (this page is in Chinese)](http://mp.weixin.qq.com/cgi-bin/callbackprofile?type=info&t=wxm-developer-ahead&lang=zh_CN)
+### Media Items
+
+When sending media items you have to upload the item first before sending. TODO Provide example...
 
 ### Reply Messages
 
-auto reply a message when your followers send a message to you. also text, image, videos, music, thumbnails posts are supported. details API goes [here (official documents)](http://mp.weixin.qq.com/wiki/index.php?title=发送被动响应消息)
+Auto reply a message when your followers send a message to you. also text, image, videos, music, thumbnails posts are supported. details API goes [here (official documents)](http://mp.weixin.qq.com/wiki/index.php?title=发送被动响应消息)
 
 #### Reply with text
 ```
