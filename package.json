@@ -1,7 +1,7 @@
 {
-  "name": "wechat-pro",
+  "name": "node-wechat",
   "version": "0.0.1",
-  "description": "微信公共平台Node库wechat的修改版",
+  "description": "Node.js module for WeChat",
   "main": "index.js",
   "scripts": {
     "test": "make test-all",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hermione521/wechat.git"
+    "url": "git://github.com/wvanjaarsveld/wechat.git"
   },
   "keywords": [
     "weixin",
@@ -43,9 +43,9 @@
     "muk": "*",
     "rewire": "*"
   },
-  "author": "Jackson Tian",
+  "author": "Wiaan van Jaarsveld",
   "contributors": [
-    "Hermione521 <hermione0521@gmail.com> (https://github.com/hermione521)"
+    "wvanjaarsveld <wiaanv@gmail.com> (https://github.com/wvanjaarsveld)"
   ],
   "license": "MIT",
   "readmeFilename": "README.md",
